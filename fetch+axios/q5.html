@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Question 5</title>
+  </head>
+  <body>
+    <h1>업데이트된 게시물</h1>
+    <h2>결과가 잘 나오는지를 보시려면 console을 확인해 주세요!(f12)</h2>
+    <p></p>
+    <script>
+      const BACKEND_URL = "https://jsonplaceholder.typicode.com/posts";
+
+      const $p = document.querySelector("p");
+      // GET 요청 보내기
+      const get = async () => {
+        const prom = await fetch(BACKEND_URL, {
+          method: "GET",
+        });
+        const json = await prom.json();
+        console.log("GET 성공", json);
+      };
+      const get1 = async () => {
+        const prom = await fetch(BACKEND_URL + "/1", {
+          method: "GET",
+        });
+        const json = await prom.json();
+        console.log("GET 성공", json);
+      };
+
+      const putPost1 = async () => {
+        // 1번 게시물 수정하기
+        const putPost = {
+          id: 1,
+          title: "김성용 강사님",
+          body: "폼 미쳤다",
+          userId: 1,
+        };
+        // 게시물 번호를 URL에 붙인다.
+        const json = await axios.put(BACKEND_URL + "/1", putPost);
+        console.log("POST 성공", json);
+        $p.innerHTML = `제목: ${json.data.title}, 내용: ${json.data.body}`;
+      };
+
+      const del = async () => {
+        const prom = await fetch(BACKEND_URL + "/1", {
+          method: "DELETE",
+        });
+        console.log("DELETE 성공(이 예시에서는 실제로 삭제되지는 않는다.)");
+      };
+
+      get();
+      putPost1();
+      del();
+    </script>
+  </body>
+</html>

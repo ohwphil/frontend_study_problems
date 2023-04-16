@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Question 2</title>
+  </head>
+  <body>
+    <h1>Result of POST request</h1>
+    <p>결과가 잘 나오는지를 보시려면 console을 확인해 주세요!(f12)</p>
+    <script>
+      /* POST가 생소한 분들을 위한 간단한 설명 */
+      // 상황에 따라서 아래의 로직과 완전히 똑같이 코드가 실행되지는 않을 수도 있고,
+      // 아래에 적은 내용에 오개념이 있을 수 있으니 에이스 여러분들의 따끔한 지적 부탁드립니다.
+
+      // POST 요청은 서버에게 client(브라우저라고 생각하시면 됩니다)가 서버에게 처리할 데이터를 담아서 보내는 것을 의미합니다.
+      // 그렇게 되면 서버가 전송된 데이터에 대한 적절한 처리를 합니다.
+      // 로그인 로직을 예로 들면, 만약 POST로 백엔드 서버에게 아이디, 비밀번호를 보내면
+      // 백엔드는 데이터베이스 서버에게 아이디가 있는지, 그리고 비밀번호는 그 아이디에 대응되는 것인지
+      // 체크하는 query 문을 날릴 수 있습니다.
+      // 그 후 백엔드 서버는 계정정보가 있는지 없는지에 따라서 여러 가지 행동을 취할 수 있습니다.
+      // 만약 계정정보가 있으면 강사님께서 언급하신 대로 로그인 토큰을 client에게 줄 수도 있고,
+      // 없으면 서버가 로그인이 실패했다는 사실을 client에게 전달할 수도 있습니다.
+
+      // 이 서버의 경우에는 만약 title과 body가 담긴 객체를 서버로 보내면,
+      // 서버는 그것을 되돌려보내는 단순한 작업을 합니다.
+      // axios의 axios.post 메서드는 서버의 주소와, 데이터를 parameter로 받고 promise를 return합니다.
+      // 아래 답을 참고하시면서 문법을 익히시면 좋을 것 같습니다.
+
+      const postData = {
+        id: 101,
+        title: "김성용 강사님",
+        body: "폼 미쳤다",
+        userId: 11,
+      };
+      const BACKEND_URL = "https://jsonplaceholder.typicode.com/posts";
+
+      // .then 이용하는 방법
+
+      // json은 axios.get() 실행에 의해 싱긴 promise의 response값.
+      // 1번 문제에서 fetch를 쓸 때 .then을 2번 실행했던 것과 달리 한 번만 then 해주면 됨!
+      axios
+        .post(BACKEND_URL, postData)
+        .then((json) => console.log(".then 사용 결과 : ", json));
+
+      // await 이용하는 방법
+      // json은 axios.get() 실행에 의해 싱긴 promise의 response값.
+
+      const axiosPost = async () => {
+        const json = await axios.post(BACKEND_URL, postData);
+        console.log("await 사용 결과 : ", json);
+      };
+
+      axiosPost();
+    </script>
+  </body>
+</html>

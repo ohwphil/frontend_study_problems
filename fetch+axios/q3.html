@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Question 3</title>
+  </head>
+  <body>
+    <h1>BTC Rate</h1>
+    <marquee>우리 모두 비트코인 부자가 되어보자</marquee>
+    <marquee direction="right" scrollamount="100">
+      <img
+        src="https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=024"
+        alt=""
+        width="300"
+      />
+    </marquee>
+    <p></p>
+    <p></p>
+    <script>
+      /*
+        문제 1: Fetch
+        fetch API를 사용하여 다음 URL로 GET 요청을 보내는 JavaScript 함수를 작성하세요:
+        "https://jsonplaceholder.typicode.com/posts/1".
+        이 함수는 JSON 응답에서 "title" 속성을 추출하여 반환해야 합니다.
+        */
+      const $paragraph1 = document.querySelectorAll("p")[0];
+      const $paragraph2 = document.querySelectorAll("p")[1];
+      // .then 이용하는 방법
+
+      // prom은 fetch 실행에 의해 생긴 promise의 response 값
+      // json은 prom.json() 실행에 의해 싱긴 promise의 response값.
+      // 그 뒤에 환율 추출하는 코드는 여러분이 이해해 보세요!
+      const BACKEND_URL =
+        "https://api.coindesk.com/v1/bpi/currentprice/BTC.json";
+      fetch(BACKEND_URL, {
+        method: "GET",
+      }).then((prom) =>
+        prom
+          .json()
+          .then(
+            (json) =>
+              ($paragraph1.innerHTML = `1 BTC = ${json.bpi.USD.rate} USD(Current time : ${json.time.updated})`)
+          )
+      );
+
+      // await 이용하는 방법
+
+      // prom은 fetch 실행에 의해 생긴 promise의 response 값
+      // json은 prom.json() 실행에 의해 싱긴 promise의 response값.
+      const setTitle = async () => {
+        // 첫 promise
+        const prom = await fetch(BACKEND_URL, {
+          method: "GET",
+        });
+        const json = await prom.json();
+        console.log(json);
+        $paragraph2.innerHTML = `1 BTC = ${json.bpi.USD.rate} USD(Current time : ${json.time.updated})`;
+      };
+      setTitle();
+    </script>
+  </body>
+</html>
